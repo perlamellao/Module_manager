@@ -80,7 +80,7 @@ function main() {
 		echo -e "$green 3) $red Cancelar $normal"
 		echo -e "\n\n $green"
 		read -p "Eleccion > " elec1
-		echo -e "$normal"
+		echo -e "$normal" 
 		case $elec1 in
 			
 			1)
