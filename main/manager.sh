@@ -56,7 +56,7 @@ function funcm {
 
 
 	clear
-	cd /root/Documents/pro/Mi\ Proyect/modules
+	cd /root/Documents/pro/P3rl4_Manager/modules
 
 	echo -e "\n\n$green |Que modulo quiere elegir?$normal"
 	read -p " | > " cmodule
@@ -99,10 +99,31 @@ function funcm {
 
 
 
-
-
-echo -e "------------------------"
-echo -e "|\033[42m         HOLA         \033[0m|"
-echo -e "------------------------\n\n"
+resize -s 32 68 > /dev/null
+echo -e $red""
+echo "	 									"
+echo "   	                  ..:::::::::..		"
+echo "   	               ..:::aad8888888baa:::..	"
+echo "   	           .::::d:?88888888888?::8b::::.	"
+echo "   	         .:::d8888:?88888888??a888888b:::.	"
+echo "   	       .:::d8888888a8888888aa8888888888b:::.	"
+echo "   	      ::::dP::::::::88888888888::::::::Yb::::	"
+echo "   	     ::::dP:::::::::Y888888888P:::::::::Yb::::	"
+echo "   	    ::::d8:::::::::::Y8888888P:::::::::::8b::::	"
+echo "   	   .::::88::::::::::::Y88888P::::::::::::88::::.	"
+echo "   	   :::::Y8baaaaaaaaaa88P:T:Y88aaaaaaaaaad8P:::::	"
+echo "   	   :::::::Y88888888888P::|::Y88888888888P:::::::	"
+echo "   	   ::::::::::::::::888:::|:::888::::::::::::::::	"
+echo "   	    :::::::::::::::8888888888888b::::::::::::::	"
+echo "   	    :::::::::::::::88888888888888::::::::::::::	"
+echo "   	     :::::::::::::d88888888888888::::::::::::: 	"
+echo "   	      ::::::::::::88::88::88:::88::::::::::::	"
+echo "   	        ::::::::::88::88::88:::88::::::::::	"
+echo "   	          ::::::::88::88::P::::88::::::::	"
+echo "   	            ::::::88::88:::::::88::::::	"
+echo "   	                :::::::::::::::::::	"
+echo "   	                     ::::::::: 	"
+echo -e "$normal"
+echo -e "$green Presiona [ENTER] Para Continuar"
 read
 init
