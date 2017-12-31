@@ -1,4 +1,4 @@
-# Module manager 1.01
+# Module manager 1.02
 Copyryght By P3rl4, Free Distribute License.
 
 
