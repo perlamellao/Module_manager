@@ -1,7 +1,8 @@
 #!/bin/bash
+#Normal variables
 Install_path="/root/Documents/pro/P3rl4_Manager/"
-
-
+ProgressCounter=0
+ProgressPercentage=0
 
 #color variables
 bold="\033[1m"
@@ -17,7 +18,26 @@ clear
 
 
 #functions
+#Progress bar
+function ProgressBar() {
 
+	while [[ $ProgressCounter -le 10 ]]; do
+		let ProgressCounter=$((ProgressCounter+1))
+		echo -e "$ProgressPercentage"
+		let ProgressPercentage=$((ProgressPercentage+10))
+		sleep 1
+	done | zenity --progress 
+
+
+
+
+
+
+
+
+
+
+}
 #Main Menu
 function init {
 	
@@ -116,4 +136,47 @@ function main() {
 	read
 	init
 }
+
+function TestInstalation() {
+
+	clear
+echo -e "$green   ____ _               _    _                   "
+echo "  / ___| |__   ___  ___| | _(_)_ __   __ _             "
+echo " | |   | '_ \ / _ \/ __| |/ / | '_ \ / _\ |            "
+echo " | |___| | | |  __/ (__|   <| | | | | (_| |  _   _   _ "
+echo "  \____|_| |_|\___|\___|_|\_\_|_| |_|\__/ | (_) (_) (_)"
+echo "                                     	|___/    "
+echo -e "$normal"
+#metasploit
+hash msfconsole
+if [[ $? -eq 0 ]]; then
+	echo -e "$normal \n\n[$green ✔$normal ]$red Metasploit Esta Instalado"
+else
+	echo -e "$normal [$green x$normal ]$red Metasploit No Esta Instalado Y Es Necesario"
+fi
+sleep 0.7
+#msfvenom
+hash msfvenom
+if [[ $? -eq 0 ]]; then
+	echo -e "$normal \n\n[$green ✔$normal ]$red Msfvenom Esta Instalado"
+else
+	echo -e "$normal [$green x$normal ]$red Msfvenom No Esta Instalado Y Es Necesario"
+fi
+sleep 1.5
 main
+}
+
+TestInstalation
+
+
+
+
+
+
+
+
+
+
+
+
+
