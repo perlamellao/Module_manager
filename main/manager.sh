@@ -1,8 +1,10 @@
 #!/bin/bash
 #Normal variables
-Install_path="/root/Documents/pro/P3rl4_Manager/"
+module_list_file="$working_path/modules/installed"
+working_path=$(pwd)
 ProgressCounter=0
 ProgressPercentage=0
+module_list=$(cat $working_path/modules/installed)
 
 #color variables
 bold="\033[1m"
@@ -17,8 +19,8 @@ blue="\033[34m"
 clear
 
 
-#functions
-#Progress bar
+#aqui empiezan las funciones
+#Barra progreso
 function ProgressBar() {
 
 	while [[ $ProgressCounter -le 10 ]]; do
@@ -38,14 +40,13 @@ function ProgressBar() {
 
 
 }
-#Main Menu
+#menu de eleccion
 function init {
 	
 	clear
 	while [[ $REPLY != 0 ]]; do
 		clear
-		echo -e "\n\n               $green 1) $red Ver Lista De Modulos"
-		echo -e "               $green 2) $red Elegir Modulo Por Su Numero"
+		echo -e "\n\n               $green 1) $red Ver Lista De Modulos Y Elegir"
 		echo -e "               $green 0) $red Salir $normal \n\n\n"
 		echo -e "$blue"
 
@@ -54,9 +55,6 @@ function init {
 		if [[ $REPLY =~ ^[0-2]$ ]]; then
 			if [[ $REPLY == 1 ]]; then
 				funml			
-			fi
-			if [[ $REPLY == 2 ]]; then
-				funcm
 			fi
 			if [[ $REPLY == 0 ]]; then
 				clear 
@@ -71,40 +69,21 @@ function init {
 		fi
 	done
 }		
-#Module List, If You Add A Module Add It Here Too
+#Vista de modulo y eleccion
 function funml {
 	clear
-	echo -e "$red 1) $green dns_spoof $normal"
-	echo -e "$red 2) $green android_payload $normal"
-	read
+	echo -e "$green $module_list"
+	read	
+
+
+
+
+
+
+
+
 }
-#Choose Module And Execute It
-function funcm {
-
-
-	clear
-	cd $Install_path/modules
-
-	echo -e "\n\n$green |Que modulo quiere elegir?"
-	read -p " | > " cmodule
-	echo -e "$normal"
-	
-	case $cmodule in
-		1)
-			clear
-			./dns_spoof
-			;;
-		2)
-			./android_payload
-			clear
-			;;
-		*)
-		clear
-		echo -e "$red Ese Modulo No Existe$normal"
-		sleep 2
-	esac
-}
-#main menu
+#menu principal
 function main() {
 	clear
 	resize -s 32 68 > /dev/null
